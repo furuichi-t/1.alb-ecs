@@ -42,7 +42,7 @@ resource "aws_route_table_association" "rtba2" {
 }
 
 resource "aws_security_group" "alb-sg" { 
-  name   = "ecs-alb-furuichi"
+  name   = "ecs-alb-sg"
   vpc_id = aws_vpc.ecs-vpc.id
 
   ingress {
@@ -61,7 +61,7 @@ resource "aws_security_group" "alb-sg" {
 }
 
 resource "aws_security_group" "ecs-sg-service" { 
-  name   = "ecs-furuichi-sg"
+  name   = "ecs-sg"
   vpc_id = aws_vpc.ecs-vpc.id
 
   ingress {
@@ -81,7 +81,7 @@ resource "aws_security_group" "ecs-sg-service" {
 
 
 resource "aws_ecs_cluster" "ecs-cluster" { 
-  name = "furuichi-ecs"
+  name = "ecs-cluster"
 }
 
 resource "aws_ecs_task_definition" "ecs-task" {
@@ -109,7 +109,7 @@ resource "aws_ecs_task_definition" "ecs-task" {
 } 
 
 resource "aws_iam_role" "ecs_task_execution_role" { 
-  name = "furuichi-iam-role"
+  name = "iam-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -124,7 +124,7 @@ resource "aws_iam_role" "ecs_task_execution_role" {
 }
 
 resource "aws_lb" "ecs-alb" { 
-  name               = "ecs-furuichi-alb"
+  name               = "ecs-alb"
   internal           = false 
   load_balancer_type = "application" 
   security_groups    = [aws_security_group.alb-sg.id] 
@@ -134,7 +134,7 @@ resource "aws_lb" "ecs-alb" {
 }
 
 resource "aws_lb_target_group" "ecs-tg" { 
-  name     = "ecs-furuichi-tg"
+  name     = "ecs-tg"
   port     = 80 
   protocol = "HTTP" 
   vpc_id   = aws_vpc.ecs-vpc.id 
@@ -154,7 +154,7 @@ resource "aws_lb_listener" "ecs-alb-listener" {
 
 
 resource "aws_ecs_service" "ecs-service" {
-  name            = "ecsservicefuruichi"
+  name            = "ecsservice"
   cluster         = aws_ecs_cluster.ecs-cluster.id
   task_definition = aws_ecs_task_definition.ecs-task.arn
   desired_count   = 1
@@ -168,7 +168,7 @@ resource "aws_ecs_service" "ecs-service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs-tg.arn
-    container_name   = "furuichitest"
+    container_name   = "ecs-container"
     container_port   = 80
   }
     lifecycle {
