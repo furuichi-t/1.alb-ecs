@@ -11,7 +11,7 @@ provider "aws" {
 
   default_tags {
    tags = {
-    Name = "tf-test-furuichi"
+    Name = var.default_name
     }
   }
 }
