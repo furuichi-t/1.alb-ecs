@@ -85,7 +85,7 @@ resource "aws_ecs_cluster" "ecs-cluster" {
 }
 
 resource "aws_ecs_task_definition" "ecs-task" {
-  family                   = var.ecs_task_name 
+  family                   = "ecs-task"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 256
