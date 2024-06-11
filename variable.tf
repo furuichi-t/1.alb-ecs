@@ -1,6 +1,11 @@
+variable "default_name" {
+  type = string
+  default = "your_name"
+}
+
 variable "ecs_task_name" {
   type = string
-  default = "test-furuichi"
+  default = "your_name"
 }
 
 variable "ecs_task_cpu" {
