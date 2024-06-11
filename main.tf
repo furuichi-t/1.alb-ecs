@@ -94,7 +94,7 @@ resource "aws_ecs_task_definition" "ecs-task" {
 
   container_definitions = jsonencode([ 
     {
-      "name"      : "furuichitest", 
+      "name"      : "my-tf-container", 
       "image"     : "httpd:2.4", 
       "portMappings" : [
         {
