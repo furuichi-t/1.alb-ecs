@@ -3,10 +3,6 @@ variable "default_name" {
   default = "your_name"
 }
 
-variable "ecs_task_name" {
-  type = string
-  default = "your_name"
-}
 
 variable "ecs_task_cpu" {
   type = string
